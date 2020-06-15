@@ -1,9 +1,50 @@
 # Finetuning SciBERT on NER downstream task
 This repository contains code to finetune BERT-based models on Named Entity Recogniton downstream tasks.
 A part from just providing the code to train a BERT-based NER, the idea is to provide results for several 
-biomedical datasets as well as the models (that will be uploaded into [HuggingFace models](https://huggingface.co/models))
+biomedical datasets as well as the models (which are uploaded into HuggingFace models [website](https://huggingface.co/models))
 
 ## Usage
+If you are only interested on using the models in inference, they are available from their HuggingFace model website:
+- [`scibert_scivocab_cased_ner_jnlpba`](https://huggingface.co/fran-martinez/scibert_scivocab_cased_ner_jnlpba). 
+
+### Example of usage (scibert_scivocab_cased_ner_jnlpba)
+````python
+from transformers import pipeline
+
+text = "Mouse thymus was used as a source of glucocorticoid receptor from normal CS lymphocytes."
+
+nlp_ner = pipeline("ner",
+                   model='fran-martinez/scibert_scivocab_cased_ner_jnlpba',
+                   tokenizer='fran-martinez/scibert_scivocab_cased_ner_jnlpba')
+
+nlp_ner(text)
+
+# Output:
+#---------------------------
+# [
+# {'word': 'glucocorticoid', 
+# 'score': 0.9894881248474121, 
+# 'entity': 'B-protein'}, 
+# 
+# {'word': 'receptor', 
+# 'score': 0.989505410194397, 
+# 'entity': 'I-protein'}, 
+# 
+# {'word': 'normal', 
+# 'score': 0.7680378556251526, 
+# 'entity': 'B-cell_type'}, 
+# 
+# {'word': 'cs', 
+# 'score': 0.5176806449890137, 
+# 'entity': 'I-cell_type'}, 
+# 
+# {'word': 'lymphocytes', 
+# 'score': 0.9898491501808167, 
+# 'entity': 'I-cell_type'}
+# ]
+````
+
+## Code explanined
 To be done ...
 
 ## Experiments
