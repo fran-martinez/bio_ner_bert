@@ -8,6 +8,14 @@ If you are only interested on using the models in inference, they are available 
 - [`scibert_scivocab_cased_ner_jnlpba`](https://huggingface.co/fran-martinez/scibert_scivocab_cased_ner_jnlpba). 
 
 ### Example of usage (scibert_scivocab_cased_ner_jnlpba)
+Load model and tokenizer as follows:
+````python
+from transformers import AutoTokenizer, AutoModelForTokenClassification
+
+tokenizer = AutoTokenizer.from_pretrained("fran-martinez/scibert_scivocab_cased_ner_jnlpba")
+model = AutoModelForTokenClassification.from_pretrained("fran-martinez/scibert_scivocab_cased_ner_jnlpba")
+````
+Or use a pipeline:
 ````python
 from transformers import pipeline
 
