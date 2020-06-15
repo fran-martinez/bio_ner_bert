@@ -1,12 +1,12 @@
-from typing import List, Optional, Dict, Tuple, Union
-from dataclasses import dataclass, asdict
-from transformers import PreTrainedTokenizer
-import torch
-from torch.utils.data.dataset import IterableDataset, Dataset
-from torch import nn
-from transformers import AutoTokenizer
 from collections import defaultdict
+from dataclasses import dataclass, asdict
+from typing import List, Optional, Dict, Tuple, Union
+
 import numpy as np
+import torch
+from torch import nn
+from torch.utils.data.dataset import Dataset
+from transformers import PreTrainedTokenizer
 
 
 @dataclass
@@ -177,11 +177,11 @@ def data2tensors(data=List[DataSample],
                 tokens.extend(subword_tokens)
 
             # Use the real label id for the first token of the word, and padding ids for the remaining tokens
-            # label_ids.extend([label2idx[label]] + [pad_token_label_id] * (len(subword_tokens) - 1))
-            if label.startswith('B'):
-                label_ids.extend([label2idx[label]] + [label2idx[f"I{label[1:]}"]] * (len(subword_tokens) - 1))
-            else:
-                label_ids.extend([label2idx[label]] + [label2idx[label]] * (len(subword_tokens) - 1))
+            label_ids.extend([label2idx[label]] + [pad_token_label_id] * (len(subword_tokens) - 1))
+            # if label.startswith('B'):
+            #     label_ids.extend([label2idx[label]] + [label2idx[f"I{label[1:]}"]] * (len(subword_tokens) - 1))
+            # else:
+            #     label_ids.extend([label2idx[label]] + [label2idx[label]] * (len(subword_tokens) - 1))
 
         # Drop part of the sequence longer than max_seq_len (account also for [CLS] and [SEP])
         if len(tokens) > max_seq_len - 2:
@@ -220,15 +220,3 @@ def data2tensors(data=List[DataSample],
                                    token_type_ids=torch.tensor(segment_ids),
                                    labels=torch.tensor(label_ids))))
     return features
-
-
-
-
-
-
-
-
-
-
-
-

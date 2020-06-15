@@ -1,22 +1,23 @@
-from data_utils import *
-from optimizers import get_optimizer_with_weight_decay
-from transformers import (get_linear_schedule_with_warmup,
-                          get_cosine_schedule_with_warmup,
-                          get_cosine_with_hard_restarts_schedule_with_warmup,
-                          BertForTokenClassification,
-                          AdamW)
 import random
+
 import numpy as np
 import torch
-from torch.utils.data import DataLoader
-from trainer import BertTrainer
 from torch.optim import Adam
+from torch.utils.data import DataLoader
+from transformers import (get_linear_schedule_with_warmup,
+                          BertForTokenClassification,
+                          AutoTokenizer,
+                          AdamW)
+
+from data_utils import *
+from optimizers import get_optimizer_with_weight_decay
+from trainer import BertTrainer
 
 # https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data
 DATA_TR_PATH = './data/JNLPBA/Genia4ERtask1.iob2'
 DATA_TS_PATH = './data/JNLPBA/Genia4EReval1.iob2'
 
-# SEED = 42
+SEED = 42
 
 # MODEL
 # MODEL_NAME = 'allenai/biomed_roberta_base'
@@ -36,10 +37,10 @@ ACUMULATE_GRAD_EVERY = 4
 OPTIMIZER = Adam
 
 # Seeds
-# random.seed(SEED)
-# np.random.seed(SEED)
-# torch.manual_seed(SEED)
-# torch.cuda.manual_seed_all(SEED)
+random.seed(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.cuda.manual_seed_all(SEED)
 
 # get data
 training_set = read_data_from_file(DATA_TR_PATH)
