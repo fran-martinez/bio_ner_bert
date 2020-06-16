@@ -173,7 +173,7 @@ class BertTrainer:
                              val_loss):
         """
         Writes and saves the following info into a file called `classification_report.txt`
-        wihtin the directory `output_dir` for the model from the best epoch:
+        within the directory `output_dir` for the model from the best epoch:
             - Classification report at span/entity level (for validation dataset).
             - Classification report at word level (for validation dataset).
             - Epoch where the best model was found (best F1-score in validation dataset)
