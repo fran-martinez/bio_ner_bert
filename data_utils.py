@@ -40,12 +40,12 @@ class NerDataset(Dataset):
                  max_len_seq: int = 512,
                  bert_hugging: bool = True):
         """
-        Class that builds a torch Dataset specially designed for NER data
+        Class that builds a torch Dataset specially designed for NER data.
         Args:
-            dataset (list of `DataSample`): Each data sample is a dataclass that
-                contains two fields: `words` and `labels`. Both are lists of `str`.
+            dataset (list of `DataSample` instances): Each data sample is a dataclass
+            that contains two fields: `words` and `labels`. Both are lists of `str`.
             tokenizer (`PreTrainedTokenizer`): Pre-trained tokenizer from transformers
-            library. Usually loaded as `AutoTokenizer.from_pretrained(...)`
+            library. Usually loaded as `AutoTokenizer.from_pretrained(...)`.
             labels2ind (`dict`): maps `str` class labels into `int` indexes.
             max_len_seq (`int`): Max length sequence for each example (sentence).
             bert_hugging (`bool`):
@@ -82,7 +82,7 @@ def get_labels(data=List[DataSample]) -> Tuple[Dict[str, int], Dict[str, int]]:
 
     Returns:
         labels2idx (`dict`): maps `str` class labels into `int` indexes.
-        labels_count(`dict`): The number of times that each class label appears in
+        labels_count(`dict`): The number of words for each class label that appears in
             the dataset. Usufull information if you want to apply class weights on
             imbalanced data.
 
@@ -104,14 +104,17 @@ def get_labels(data=List[DataSample]) -> Tuple[Dict[str, int], Dict[str, int]]:
     return labels2idx, dict(labels_counts)
 
 
-def get_class_weight_tensor(labels2ind, labels_count):
+def get_class_weight_tensor(labels2ind: Dict[str, int],
+                            labels_count: Dict[str, int]) -> torch.Tensor:
     """
-
+    Get the class weights based on the class labels frequency within the dataset.
     Args:
-        labels2ind:
-        labels_count:
+        labels2ind (`dict`): maps `str` class labels into `int` indexes.
+        labels_count: The number of words for each class label that appears in
+            the dataset.
 
     Returns:
+        torch.Tensor with the class weights. Size (num_classes).
 
     """
     label2ind_list = [(k, v) for k, v in labels2ind.items()]
@@ -123,12 +126,14 @@ def get_class_weight_tensor(labels2ind, labels_count):
 
 def read_data_from_file(file_path: str, sep: str = '\t') -> List[DataSample]:
     """
-    Load data from a txt file in the required format (list of `DataSample`)
+    Load data from a txt file (BIO tagging format) and transform it into the
+    required format (list of `DataSample` instances).
     Args:
-        file_path:
-        sep:
+        file_path (`str`): complete path where the data is located (path + filename).
+        sep (`str`): Symbol used to separete word from label at each line. Default `\t`.
 
     Returns:
+        List of `DataSample` instances containing words and labels.
 
     """
     examples = []
@@ -153,15 +158,18 @@ def data2tensors(data=List[DataSample],
                  pad_token_label_id: int = -100,
                  max_seq_len: int = 512) -> List[InputBert]:
     """
-
+    Takes data and converts it into tensors to feed the neural network.
     Args:
-        data:
-        tokenizer:
-        label2idx:
-        pad_token_label_id:
-        max_seq_len:
+        data (`list`): List of `DataSample` instances containing words and labels.
+        tokenizer (`PreTrainedTokenizer`): Pre-trained tokenizer from transformers
+            library. Usually loaded as `AutoTokenizer.from_pretrained(...)`.
+        label2idx (`dict`): maps `str` class labels into `int` indexes.
+        pad_token_label_id (`int`): index to define the special token [PAD]
+        max_seq_len: Max sequence length.
 
     Returns:
+        List of `InputBert` instances. `InputBert` is a dataclass that contains
+        `input_ids`, `attention_mask`, `token_type_ids` and `labels` (Optional).
 
     """
 
