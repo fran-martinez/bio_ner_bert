@@ -36,7 +36,7 @@ class BertTrainer:
         BERT-based models from transformers library. It allows to save the model
         from the epoch with the best F1-score and the tokenizer. The class
         optionally generates reports and figures with the obtained results that
-        that are automatically stored in disk.
+        are automatically stored in disk.
 
         Args:
             model (`PreTrainedModel`): Pre-trained model from transformers library.
@@ -65,8 +65,8 @@ class BertTrainer:
                 batch_size * accumulate_grad_every.
             print_val_mistakes (`bool`): whether to print validation examples (sentences) where the model
                 commits at least one mistake. It is printed after each epoch. The printed info is the word
-                    within each sentence, its predicted label and the real label. This is very useful to
-                    inspect the behaviour of your model.
+                within each sentence, its predicted label and the real label. This is very useful to
+                inspect the behaviour of your model.
             output_dir (`str`): Directory where file reports and images are saved.
         """
 
