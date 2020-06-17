@@ -88,7 +88,6 @@ for token, pred in zip(tokenizer.tokenize(text), predictions):
 # cs -> I-cell_type
 # lymphocytes -> I-cell_type
 # . -> O
-
 ````
 
 ## Training a model

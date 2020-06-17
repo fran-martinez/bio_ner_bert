@@ -166,11 +166,11 @@ class BertTrainer:
                           f"{label_pred:<{max_len_token}}")
 
     def write_report_to_file(self,
-                             report_entities,
-                             report_tokens,
-                             epoch,
-                             tr_loss,
-                             val_loss):
+                             report_entities: str,
+                             report_tokens: str,
+                             epoch: int,
+                             tr_loss: float,
+                             val_loss: float):
         """
         Writes and saves the following info into a file called `classification_report.txt`
         within the directory `output_dir` for the model from the best epoch:
@@ -203,7 +203,7 @@ class BertTrainer:
         self.model.save_pretrained(self.output_dir)
         self.tokenizer.save_pretrained(self.output_dir)
 
-    def _estimate_gradients(self, batch):
+    def _estimate_gradients(self, batch: Dict[str, torch.Tensor]):
         # Send tensors to device
         batch = {k: v.to(self.device) for k, v in batch.items()}
 
@@ -224,7 +224,7 @@ class BertTrainer:
             self.scheduler.step()
         self.model.zero_grad()
 
-    def _validation_step(self, batch):
+    def _validation_step(self, batch: Dict[str, torch.Tensor]):
         # Send tensors to device
         batch = {k: v.to(self.device) for k, v in batch.items()}
 
@@ -279,6 +279,8 @@ class BertTrainer:
                           f"- Step: {step:3}/{(len(self.dataloader_train)// self.accumulate_grad_every) - 1}",
                           f"- Training Loss: {tr_loss_mean:.6f}")
 
+                    break
+
             loss_tr_epochs.append(tr_loss_mean)
             print(f"- Epoch: {epoch}/{self.n_epochs - 1} - Training Loss: {tr_loss_mean}")
 
@@ -302,6 +304,7 @@ class BertTrainer:
                     y_true.extend(batch['labels'].tolist())
                     y_pred.extend(pred.argmax(axis=-1).tolist())
                     input_ids.extend(batch['input_ids'].tolist())
+                    break
 
                 y_true, y_pred, input_ids = self._reformat_predictions(y_true, y_pred, input_ids)
 
