@@ -102,9 +102,6 @@ these three elements in order to train and end-to-end BERT-based NER.
 
 TO BE CONTINUED ....
 
-### Data
-It is managed through the class `NerDataset`. This class creates 
-
 ## Experiments
 ### SciBERT finetuned on JNLPA
 #### Language Model
