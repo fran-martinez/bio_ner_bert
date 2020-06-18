@@ -1,10 +1,10 @@
 # Finetuning SciBERT on NER downstream task
-This repository contains code to finetune BERT-based models on Named Entity Recogniton downstream tasks.
-A part from just providing the code to train a BERT-based NER, the idea is to provide results for several 
-biomedical datasets as well as the models (which are uploaded into HuggingFace models [website](https://huggingface.co/models))
+This repository contains code to finetune BERT-based models on Named Entity Recognition downstream tasks.
+A part from providing the code, the repository also provides results for several 
+biomedical datasets as well as the models (which I have uploaded into HuggingFace models [website](https://huggingface.co/models))
 
 ## Model Usage in inference
-If you are only interested on using the models in inference, they are available from their HuggingFace model website:
+If you are only interested on using the models in inference, they are available from the following links:
 - [`scibert_scivocab_cased_ner_jnlpba`](https://huggingface.co/fran-martinez/scibert_scivocab_cased_ner_jnlpba). 
 
 ### Example of usage
@@ -97,12 +97,12 @@ lymphocytes -> I-cell_type
 ## Training your own model
 The script [`train_ner.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/train_ner.py) is ready to use 
 in order to train and end-to-end BERT-based NER. You just need to download the 
-[data](https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data) and locate it in the corresponding
+[data](https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data) and locate it into the corresponding
  directory (./data/JNLPBA/) or to change the path within `train_ner.py`.  
  
 `train_ner.py` consists of three main elements: 
 - The data: [`NerDataset`](https://github.com/fran-martinez/bio_ner_bert/blob/master/data_utils/data_utils.py#L35) class.
-- The model: `BertForTokenClassification` and `AutoTokenizer` from [`transformer`](https://github.com/huggingface/transformers) library.
+- The model: `BertForTokenClassification` and `AutoTokenizer` classes from [`transformer`](https://github.com/huggingface/transformers) library.
 - The trainer: [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
 
 TO BE CONTINUED ....
