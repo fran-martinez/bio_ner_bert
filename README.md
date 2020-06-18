@@ -7,7 +7,7 @@ biomedical datasets as well as the models (which are uploaded into HuggingFace m
 If you are only interested on using the models in inference, they are available from their HuggingFace model website:
 - [`scibert_scivocab_cased_ner_jnlpba`](https://huggingface.co/fran-martinez/scibert_scivocab_cased_ner_jnlpba). 
 
-### Example of usage (scibert_scivocab_cased_ner_jnlpba)
+### Example of usage
 Use the pipeline:
 ````python
 from transformers import pipeline
