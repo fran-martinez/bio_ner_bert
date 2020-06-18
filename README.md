@@ -94,14 +94,16 @@ lymphocytes -> I-cell_type
 """
 ````
 
-## Training a model
-There are three main elements to train the BERT-based NER:
-- Data: [`NerDataset`](https://github.com/fran-martinez/bio_ner_bert/blob/c655bacbb35ecd5bec69ee35c3f31a40f6bf429f/data_utils.py#L35) class.
-- Model: `BertForTokenClassification` and `AutoTokenizer` from [`transformer`](https://github.com/huggingface/transformers) library.
-- Trainer: [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
-
-The script [`main.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/main.py) is ready to use
-these three elements in order to train and end-to-end BERT-based NER. 
+## Training your own model
+The script [`train_ner.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/train_ner.py) is ready to use 
+in order to train and end-to-end BERT-based NER. You just need to download the 
+[data](https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data) and locate it in the corresponding
+ directory (./data/JNLPBA/) or to change the path within `train_ner.py`.  
+ 
+`train_ner.py` contains of three main elements: 
+- The data: [`NerDataset`](https://github.com/fran-martinez/bio_ner_bert/blob/master/data_utils/data_utils.py#L35) class.
+- The model: `BertForTokenClassification` and `AutoTokenizer` from [`transformer`](https://github.com/huggingface/transformers) library.
+- The trainer: [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
 
 TO BE CONTINUED ....
 
