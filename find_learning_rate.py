@@ -5,10 +5,10 @@ from torch.utils.data import DataLoader
 from torch_lr_finder import LRFinder
 from transformers import AutoTokenizer
 
-from data_utils import *
-from neural_architectures import *
-from neural_architectures import BertForTokenClassificationCustom
-from optimizers import get_optimizer_with_weight_decay
+from data_utils.data_utils import *
+from nn_utils.neural_architectures import *
+from nn_utils.neural_architectures import BertForTokenClassificationCustom
+from nn_utils.optimizers import get_optimizer_with_weight_decay
 
 DATA_TR_PATH = './data/JNLPBA/Genia4ERtask1.iob2'
 SEED = 42

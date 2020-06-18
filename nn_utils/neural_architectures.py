@@ -1,6 +1,4 @@
-import torch
 from torch import nn
-from torch.nn.modules.loss import CrossEntropyLoss
 from transformers import BertForTokenClassification
 
 
