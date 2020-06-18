@@ -73,23 +73,25 @@ predictions = outputs[0].argmax(axis=-1)[0][1:-1]
 for token, pred in zip(tokenizer.tokenize(text), predictions):
   print(token, '->', model.config.id2label[pred.numpy().item()])
 
-# Output:
-#---------------------------
-# mouse -> O
-# thymus -> O
-# was -> O
-# used -> O
-# as -> O
-# a -> O
-# source -> O
-# of -> O
-# glucocorticoid -> B-protein
-# receptor -> I-protein
-# from -> O
-# normal -> B-cell_type
-# cs -> I-cell_type
-# lymphocytes -> I-cell_type
-# . -> O
+"""
+Output:
+---------------------------
+mouse -> O
+thymus -> O
+was -> O
+used -> O
+as -> O
+a -> O
+source -> O
+of -> O
+glucocorticoid -> B-protein
+receptor -> I-protein
+from -> O
+normal -> B-cell_type
+cs -> I-cell_type
+lymphocytes -> I-cell_type
+. -> O
+"""
 ````
 
 ## Training a model
