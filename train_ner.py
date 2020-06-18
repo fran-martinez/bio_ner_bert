@@ -13,11 +13,9 @@ from nn_utils.trainer import BertTrainer
 # https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data
 DATA_TR_PATH = './data/JNLPBA/Genia4ERtask1.iob2'
 DATA_TS_PATH = './data/JNLPBA/Genia4EReval1.iob2'
-
 SEED = 42
 
 # MODEL
-# MODEL_NAME = 'allenai/biomed_roberta_base'
 MODEL_NAME = 'allenai/scibert_scivocab_uncased'
 MAX_LEN_SEQ = 128
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
