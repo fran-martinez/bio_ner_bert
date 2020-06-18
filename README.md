@@ -100,7 +100,7 @@ in order to train and end-to-end BERT-based NER. You just need to download the
 [data](https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data) and locate it in the corresponding
  directory (./data/JNLPBA/) or to change the path within `train_ner.py`.  
  
-`train_ner.py` contains of three main elements: 
+`train_ner.py` consists of three main elements: 
 - The data: [`NerDataset`](https://github.com/fran-martinez/bio_ner_bert/blob/master/data_utils/data_utils.py#L35) class.
 - The model: `BertForTokenClassification` and `AutoTokenizer` from [`transformer`](https://github.com/huggingface/transformers) library.
 - The trainer: [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
