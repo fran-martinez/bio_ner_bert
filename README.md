@@ -20,29 +20,31 @@ nlp_ner = pipeline("ner",
 
 nlp_ner(text)
 
-# Output:
-#---------------------------
-# [
-# {'word': 'glucocorticoid', 
-# 'score': 0.9894881248474121, 
-# 'entity': 'B-protein'}, 
-# 
-# {'word': 'receptor', 
-# 'score': 0.989505410194397, 
-# 'entity': 'I-protein'}, 
-# 
-# {'word': 'normal', 
-# 'score': 0.7680378556251526, 
-# 'entity': 'B-cell_type'}, 
-# 
-# {'word': 'cs', 
-# 'score': 0.5176806449890137, 
-# 'entity': 'I-cell_type'}, 
-# 
-# {'word': 'lymphocytes', 
-# 'score': 0.9898491501808167, 
-# 'entity': 'I-cell_type'}
-# ]
+"""
+ Output:
+---------------------------
+[
+{'word': 'glucocorticoid', 
+'score': 0.9894881248474121, 
+'entity': 'B-protein'}, 
+
+{'word': 'receptor', 
+'score': 0.989505410194397, 
+'entity': 'I-protein'}, 
+
+{'word': 'normal', 
+'score': 0.7680378556251526, 
+'entity': 'B-cell_type'}, 
+ 
+{'word': 'cs', 
+'score': 0.5176806449890137, 
+'entity': 'I-cell_type'}, 
+
+{'word': 'lymphocytes', 
+'score': 0.9898491501808167, 
+'entity': 'I-cell_type'}
+]
+"""
 ````
 Or load model and tokenizer as follows:
 ````python
