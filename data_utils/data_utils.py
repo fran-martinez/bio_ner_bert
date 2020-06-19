@@ -73,7 +73,7 @@ class NerDataset(Dataset):
             return list(inputs.values()), labels
 
 
-def get_labels(data=List[DataSample]) -> Tuple[Dict[str, int], Dict[str, int]]:
+def get_labels(data: List[DataSample]) -> Tuple[Dict[str, int], Dict[str, int]]:
     """
     Automatically extract labels types from the data and its count.
     Args:
@@ -152,9 +152,9 @@ def read_data_from_file(file_path: str, sep: str = '\t') -> List[DataSample]:
     return examples
 
 
-def data2tensors(data=List[DataSample],
-                 tokenizer=PreTrainedTokenizer(),
-                 label2idx=Dict[str, int],
+def data2tensors(data: List[DataSample],
+                 tokenizer: PreTrainedTokenizer(),
+                 label2idx: Dict[str, int],
                  pad_token_label_id: int = -100,
                  max_seq_len: int = 512) -> List[InputBert]:
     """
