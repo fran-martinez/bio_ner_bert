@@ -50,8 +50,7 @@ torch.cuda.manual_seed_all(SEED)
 
 legend = []
 fig = None
-# class_weights = get_class_weight_tensor(labels2ind, labels_count).to('cuda')
-no_decay = ["bias", "LayerNorm.weight"]
+
 for wd in [0, .1, 1e-2, 1e-3, 1e-4]:
     for dp in [.1, 0.2, .3]:
         nerbert = BertForTokenClassificationCustom.from_pretrained(pretrained_model_name_or_path=MODEL_NAME,
