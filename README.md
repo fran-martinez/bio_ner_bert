@@ -106,7 +106,15 @@ in order to train and end-to-end BERT-based NER. You just need to download the
 - The model: `BertForTokenClassification` and `AutoTokenizer` classes from [`transformer`](https://github.com/huggingface/transformers) library.
 - The trainer: [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
 
-TO BE CONTINUED ....
+The script [`find_learning_rate.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/find_learning_rate.py) can
+be used to find an initial learning rate based on the range test detailed in [Cyclical Learning Rates for Training Neural 
+Cyclical Learning Rates for Training Neural Networks](https://arxiv.org/abs/1506.01186). It makes use of the Pytorch
+Implementation [`pytorch-lr-finder`](https://github.com/davidtvs/pytorch-lr-finder). The output given by `BertForTokenClassification`
+from `transformers` library implementation is not compatible with `pytorch-lr-finder`. For this reason, I have created a
+class named `BertForTokenClassificationCustom` which is a subclass of `torch.nn.Module` that instantiates `BertForTokenClassification`
+and changes the output given by the `forward` method in order to make `transformers` BERT compatible with `pytorch-lr-finder`.
+
+TO BE CONTINUED ...
 
 ## Experiments
 ### SciBERT finetuned on JNLPA
