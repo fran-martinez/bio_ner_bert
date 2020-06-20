@@ -279,8 +279,6 @@ class BertTrainer:
                           f"- Step: {step:3}/{(len(self.dataloader_train)// self.accumulate_grad_every) - 1}",
                           f"- Training Loss: {tr_loss_mean:.6f}")
 
-                    break
-
             loss_tr_epochs.append(tr_loss_mean)
             print(f"- Epoch: {epoch}/{self.n_epochs - 1} - Training Loss: {tr_loss_mean}")
 
@@ -304,7 +302,6 @@ class BertTrainer:
                     y_true.extend(batch['labels'].tolist())
                     y_pred.extend(pred.argmax(axis=-1).tolist())
                     input_ids.extend(batch['input_ids'].tolist())
-                    break
 
                 y_true, y_pred, input_ids = self._reformat_predictions(y_true, y_pred, input_ids)
 
