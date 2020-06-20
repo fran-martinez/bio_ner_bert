@@ -113,8 +113,9 @@ Implementation [`pytorch-lr-finder`](https://github.com/davidtvs/pytorch-lr-find
 from `transformers` library implementation is not compatible with `pytorch-lr-finder`. For this reason, I have created 
 [`BertForTokenClassificationCustom`](https://github.com/fran-martinez/bio_ner_bert/blob/master/nn_utils/neural_architectures.py) 
 class which is a subclass of `torch.nn.Module`. It instantiates `BertForTokenClassification`
-and changes the output given by the `forward` method in order to make BERT compatible with `pytorch-lr-finder`. I 
-have mimicked the way of loading the model to be the same as the BERT from `transformers`:
+and changes the output given by the `forward` method in order to make BERT compatible with `pytorch-lr-finder`. In other words,
+the output is reshaped to be directly compatible with `nn.module.CrossEntropyLoss` (`batch_size, num_classes, sequence_len`).
+I have mimicked the way of loading the model to be the same as the BERT from `transformers`:
 
 ````python
 from nn_utils.neural_architectures import BertForTokenClassificationCustom
