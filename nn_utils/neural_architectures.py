@@ -32,9 +32,9 @@ class BertForTokenClassificationCustom(nn.Module):
     @classmethod
     def from_pretrained(cls,
                         pretrained_model_name_or_path: str,
-                        num_labels: int,
-                        hidden_dropout_prob: float,
-                        attention_probs_dropout_prob: float):
+                        num_labels: int = 2,
+                        hidden_dropout_prob: float = 0.,
+                        attention_probs_dropout_prob: float = 0.):
 
         return BertForTokenClassificationCustom(model_name=pretrained_model_name_or_path,
                                                 num_labels=num_labels,

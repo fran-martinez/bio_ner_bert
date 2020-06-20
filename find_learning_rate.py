@@ -14,8 +14,7 @@ DATA_TR_PATH = './data/JNLPBA/Genia4ERtask1.iob2'
 SEED = 42
 
 # MODEL
-# MODEL_NAME = 'allenai/scibert_scivocab_cased'
-MODEL_NAME = 'allenai/biomed_roberta_base'
+MODEL_NAME = 'allenai/scibert_scivocab_cased'
 MAX_LEN_SEQ = 128
 
 # Optimization parameters

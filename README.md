@@ -110,9 +110,17 @@ The script [`find_learning_rate.py`](https://github.com/fran-martinez/bio_ner_be
 be used to find an initial learning rate based on the range test detailed in [Cyclical Learning Rates for Training Neural 
 Cyclical Learning Rates for Training Neural Networks](https://arxiv.org/abs/1506.01186). It makes use of the Pytorch
 Implementation [`pytorch-lr-finder`](https://github.com/davidtvs/pytorch-lr-finder). The output given by `BertForTokenClassification`
-from `transformers` library implementation is not compatible with `pytorch-lr-finder`. For this reason, I have created a
-class named `BertForTokenClassificationCustom` which is a subclass of `torch.nn.Module` that instantiates `BertForTokenClassification`
-and changes the output given by the `forward` method in order to make `transformers` BERT compatible with `pytorch-lr-finder`.
+from `transformers` library implementation is not compatible with `pytorch-lr-finder`. For this reason, I have created 
+[`BertForTokenClassificationCustom`](https://github.com/fran-martinez/bio_ner_bert/blob/master/nn_utils/neural_architectures.py) 
+class which is a subclass of `torch.nn.Module`. It instantiates `BertForTokenClassification`
+and changes the output given by the `forward` method in order to make BERT compatible with `pytorch-lr-finder`. I 
+have mimicked the way of loading the model to be the same as the BERT from `transformers`:
+
+````python
+from nn_utils.neural_architectures import BertForTokenClassificationCustom
+
+nerbert = BertForTokenClassificationCustom.from_pretrained('allenai/scibert_scivocab_uncased')
+````
 
 TO BE CONTINUED ...
 
