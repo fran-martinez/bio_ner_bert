@@ -153,7 +153,7 @@ def read_data_from_file(file_path: str, sep: str = '\t') -> List[DataSample]:
 
 
 def data2tensors(data: List[DataSample],
-                 tokenizer: PreTrainedTokenizer(),
+                 tokenizer: PreTrainedTokenizer,
                  label2idx: Dict[str, int],
                  pad_token_label_id: int = -100,
                  max_seq_len: int = 512) -> List[InputBert]:

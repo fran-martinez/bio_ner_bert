@@ -1,7 +1,9 @@
 import itertools
 import os
 from typing import Dict, Optional
+from typing import List, Tuple, Union
 
+import numpy as np
 import torch
 from matplotlib import pyplot as plt
 from seqeval.metrics import classification_report as seqeval_report
@@ -11,7 +13,6 @@ from torch import nn
 from torch.nn.modules.loss import CrossEntropyLoss
 from torch.utils.data.dataloader import DataLoader
 from transformers import PreTrainedModel, PreTrainedTokenizer
-from typing import List, Tuple, Union
 
 
 class BertTrainer:
@@ -203,7 +204,7 @@ class BertTrainer:
         self.model.save_pretrained(self.output_dir)
         self.tokenizer.save_pretrained(self.output_dir)
 
-    def _estimate_gradients(self, batch: Dict[str, torch.Tensor]):
+    def _estimate_gradients(self, batch: Dict[str, torch.Tensor]) -> float:
         # Send tensors to device
         batch = {k: v.to(self.device) for k, v in batch.items()}
 
@@ -224,7 +225,8 @@ class BertTrainer:
             self.scheduler.step()
         self.model.zero_grad()
 
-    def _validation_step(self, batch: Dict[str, torch.Tensor]):
+    def _validation_step(self,
+                         batch: Dict[str, torch.Tensor]) -> Tuple[float, np.ndarray]:
         # Send tensors to device
         batch = {k: v.to(self.device) for k, v in batch.items()}
 
@@ -234,7 +236,7 @@ class BertTrainer:
 
         return loss.item(), pred.detach().cpu().numpy()
 
-    def train(self):
+    def train(self) -> Tuple[List[float], List[float]]:
         """
          Complete training and evaluation loop in Pytorch.
         Returns:
