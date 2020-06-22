@@ -154,7 +154,7 @@ for the model from the best epoch:
 - Training loss from the best epoch.
 - Validation loss from the best epoch.
 
-Optionally, the class can print validation examples (sentences) where the model commits at least one mistake. It is 
+Optionally, the class can print at the end of each epoch validation examples (sentences) where the model commits at least one mistake. It is 
 printed after each epoch. This is very useful to inspect the behaviour of your model. This is how the print looks:
 
 ```
