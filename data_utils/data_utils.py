@@ -43,9 +43,9 @@ class NerDataset(Dataset):
         Class that builds a torch Dataset specially designed for NER data.
         Args:
             dataset (list of `DataSample` instances): Each data sample is a dataclass
-            that contains two fields: `words` and `labels`. Both are lists of `str`.
+                that contains two fields: `words` and `labels`. Both are lists of `str`.
             tokenizer (`PreTrainedTokenizer`): Pre-trained tokenizer from transformers
-            library. Usually loaded as `AutoTokenizer.from_pretrained(...)`.
+                library. Usually loaded as `AutoTokenizer.from_pretrained(...)`.
             labels2ind (`dict`): maps `str` class labels into `int` indexes.
             max_len_seq (`int`): Max length sequence for each example (sentence).
             bert_hugging (`bool`):
@@ -78,7 +78,7 @@ def get_labels(data: List[DataSample]) -> Tuple[Dict[str, int], Dict[str, int]]:
     Automatically extract labels types from the data and its count.
     Args:
         data (list of `DataSample`): Each data sample is a dataclass that contains
-        two fields: `words` and `labels`. Both are lists of `str`.
+            two fields: `words` and `labels`. Both are lists of `str`.
 
     Returns:
         labels2idx (`dict`): maps `str` class labels into `int` indexes.
@@ -110,7 +110,7 @@ def get_class_weight_tensor(labels2ind: Dict[str, int],
     Get the class weights based on the class labels frequency within the dataset.
     Args:
         labels2ind (`dict`): maps `str` class labels into `int` indexes.
-        labels_count: The number of words for each class label that appears in
+        labels_count (`dict`): The number of words for each class label that appears in
             the dataset.
 
     Returns:
@@ -165,7 +165,7 @@ def data2tensors(data: List[DataSample],
             library. Usually loaded as `AutoTokenizer.from_pretrained(...)`.
         label2idx (`dict`): maps `str` class labels into `int` indexes.
         pad_token_label_id (`int`): index to define the special token [PAD]
-        max_seq_len: Max sequence length.
+        max_seq_len (`int`): Max sequence length.
 
     Returns:
         List of `InputBert` instances. `InputBert` is a dataclass that contains
