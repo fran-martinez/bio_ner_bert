@@ -172,7 +172,7 @@ synovial       O              O
 tissues        O              O
 .              O              O
 ```
-Another thing that it is worth mentioning about this class is about the input argument `accumulate_grad_every`.
+Another thing that it is worth mentioning about this class it concerns the input argument `accumulate_grad_every`.
 This parameter sets how often you want to accumulate the gradient. This is useful when there are limitations in the 
 batch size due to memory issues. Let's say that in your GPU only fits a model with batch size of 8 and you want to try 
 a batch size of 32. Then, you should set this parameter to 4 (8*4=32). Internally, a loop will be ran 4 times 
