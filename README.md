@@ -96,17 +96,12 @@ lymphocytes -> I-cell_type
 ````
 
 ## Training your own model
-The script [`train_ner.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/train_ner.py) is ready to use 
+- The script [`train_ner.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/train_ner.py) is ready to use 
 in order to train and end-to-end BERT-based NER. You just need to download the 
 [data](https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data) and locate it into the corresponding
  directory (./data/JNLPBA/) or to change the path within `train_ner.py`.  
  
-`train_ner.py` consists of three main elements: 
-- The data: [`NerDataset`](https://github.com/fran-martinez/bio_ner_bert/blob/master/data_utils/data_utils.py#L35) class.
-- The model: `BertForTokenClassification` and `AutoTokenizer` classes from [`transformer`](https://github.com/huggingface/transformers) library.
-- The trainer: [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
-
-The script [`find_learning_rate.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/find_learning_rate.py) can
+- The script [`find_learning_rate.py`](https://github.com/fran-martinez/bio_ner_bert/blob/master/find_learning_rate.py) can
 be used to find an initial learning rate based on the range test detailed in 
 [Cyclical Learning Rates for Training Neural Networks](https://arxiv.org/abs/1506.01186). It makes use of the Pytorch
 Implementation [`pytorch-lr-finder`](https://github.com/davidtvs/pytorch-lr-finder). The output given by `BertForTokenClassification`
@@ -123,7 +118,66 @@ from nn_utils.neural_architectures import BertForTokenClassificationCustom
 nerbert = BertForTokenClassificationCustom.from_pretrained('allenai/scibert_scivocab_uncased')
 ````
 
-TO BE CONTINUED ...
+The main three elements to train a NER are: 
+### The data
+It is represented through [`NerDataset`](https://github.com/fran-martinez/bio_ner_bert/blob/master/data_utils/data_utils.py#L35) class.
+It is a subclass of `torch.utils.data.dataset.Dataset` and it has a `__getitem__` method that returns the BERT input and
+label for a given index. `NerDataset` has a boolean argument, `bert_hugging`, which provides different behaviours. If `True`, 
+the returned data by `__getitem__` is a `python` dictionary with `input_ids`, `attention_mask`, `token_type_ids`, and `labels` 
+tensors. This format is used during NER training (`train_ner.py`), since it is compatible with `BertForTokenClassification` 
+from `transformers` library. During training, `BertForTokenClassification` estimates the loss inside the `forward` method, 
+so labels are passed as input. During inference there is no need to provide labels. 
+
+If `bert_gugging=False`, the returned data is is a tuple with two elements. The first one is a list of tensors with the 
+BERT's input (`input_ids`, `attention_mask`, `token_type_ids`) The second is the tensor for the labels. This format is 
+compatible with `pytorch-lr-finder` and used in `find_learning_rate.py`.
+
+Internally, `NerDataset` calls a function `data2tensors` that transforms input examples into tensors. The input examples are
+represented as a list of a dataclass called `DataSample` that contains words and labels. The output tensors are stored in
+a list of a dataclass called `InputBert`. 
+
+### The model
+It is represented through `BertForTokenClassification` and `AutoTokenizer` classes from 
+[`transformer`](https://github.com/huggingface/transformers) library.
+
+### The trainer
+It is represented through [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.
+It is responsible of performing a complete training and evaluation loop in Pytorch and it is specially designed for BERT-based 
+models from transformers library. It allows to save the model from the epoch with the best F1-score and the tokenizer. The class
+optionally generates reports and figures with the obtained results that are automatically stored in disk. 
+
+The report contains the following info that is saved in a file called `classification_report.txt` within the directory `output_dir` 
+for the model from the best epoch:
+- Classification report at span/entity level (for validation dataset).
+- Classification report at word level (for validation dataset).
+- Epoch where the best model was found (best F1-score in validation dataset)
+- Training loss from the best epoch.
+- Validation loss from the best epoch.
+
+Optionally, the class can print validation examples (sentences) where the model commits at least one mistake. It is 
+printed after each epoch. This is very useful to inspect the behaviour of your model. This is how the print looks:
+
+```
+TOKEN          LABEL          PRED
+immunostaining O              O
+showed         O              O
+the            O              O
+estrogen       B-cell_type    B-cell_type
+receptor       I-cell_type    I-cell_type
+cells          I-cell_type    O
+                  ·
+                  ·
+                  ·
+synovial       O              O
+tissues        O              O
+.              O              O
+```
+Another thing that it is worth mentioning about this class is about the input argument `accumulate_grad_every`.
+This parameter sets how often you want to accumulate the gradient. This is useful when there are limitations in the 
+batch size due to memory issues. Let's say that in your GPU only fits a model with batch size of 8 and you want to try 
+a batch size of 32. Then, you should set this parameter to 4 (8*4=32). Internally, a loop will be ran 4 times 
+accumulating the gradient for each step. Later, the network parameters will be updated. So at the end, this is equivalent 
+to train your network with a batch size of 32. The batch size is inferred from `dataloader_train` argument.
 
 ## Experiments
 ### SciBERT finetuned on JNLPA
