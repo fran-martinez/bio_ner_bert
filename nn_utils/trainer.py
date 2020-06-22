@@ -87,6 +87,8 @@ class BertTrainer:
         self.print_val_mistakes = print_val_mistakes
         self.output_dir = output_dir
 
+        os.makedirs(self.output_dir, exist_ok=True)
+
     def _reformat_predictions(self,
                               y_true: List[List[int]],
                               y_pred: List[List[int]],
@@ -198,7 +200,6 @@ class BertTrainer:
                     f"\n- Validation Loss: {val_loss}")
 
     def _save_model(self):
-        os.makedirs(self.output_dir, exist_ok=True)
         if not isinstance(self.model, PreTrainedModel):
             raise ValueError("Trainer.model appears to not be a PreTrainedModel")
         self.model.save_pretrained(self.output_dir)
