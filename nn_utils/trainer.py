@@ -23,7 +23,7 @@ class BertTrainer:
                  dataloader_train: DataLoader,
                  n_epochs: int,
                  labels2ind: Dict[str, int],
-                 dataloader_test: Optional[DataLoader] = None,
+                 dataloader_val: Optional[DataLoader] = None,
                  scheduler: Optional[torch.optim.lr_scheduler.LambdaLR] = None,
                  device: str = 'cpu',
                  clipping: Optional[Union[int, float]] = None,
@@ -48,7 +48,7 @@ class BertTrainer:
             dataloader_train (`torch.utils.data.dataloader.DataLoader`): Pytorch dataloader.
             n_epochs (`int`): Number of epochs to train.
             labels2ind (`dict`): maps `str` class labels into `int` indexes.
-            dataloader_test (`torch.utils.data.dataloader.DataLoader`, `Optional`): Pytorch dataloader.
+            dataloader_val (`torch.utils.data.dataloader.DataLoader`, `Optional`): Pytorch dataloader.
                 If `None` no validation will be performed.
             scheduler (`torch.optim.lr_scheduler.LambdaLR`, `Optional`): Pytorch scheduler. It sets a
                 different learning rate for each training step to update the network weights.
@@ -76,7 +76,7 @@ class BertTrainer:
         self.optimizer = optimizer
         self.scheduler = scheduler
         self.dataloader_train = dataloader_train
-        self.dataloader_test = dataloader_test
+        self.dataloader_test = dataloader_val
         self.n_epochs = n_epochs
         self.labels2ind = labels2ind
         self.inds2labels = {v: k for k, v in self.labels2ind.items()}
