@@ -126,7 +126,7 @@ label for a given index. `NerDataset` has a boolean argument, `bert_hugging`, wh
 the returned data by `__getitem__` is a `python` dictionary with `input_ids`, `attention_mask`, `token_type_ids`, and `labels` 
 tensors. This format is used during NER training (`train_ner.py`), since it is compatible with `BertForTokenClassification` 
 from `transformers` library. During training, `BertForTokenClassification` estimates the loss inside the `forward` method, 
-so labels are passed as input. During inference there is no need to provide labels. 
+so labels are passed as input. During inference there is no need to provide the labels. 
 
 If `bert_gugging=False`, the returned data is is a tuple with two elements. The first one is a list of tensors with the 
 BERT's input (`input_ids`, `attention_mask`, `token_type_ids`) The second is the tensor for the labels. This format is 
@@ -244,7 +244,7 @@ RNA         |  0.6985   | 0.8051   | 0.7480   |
 
 The macro F1-score is equal to 0.7498, compared to the value provided by the Allen Institute for AI in their
 [paper](https://arxiv.org/pdf/1903.10676.pdf), which is equal to 0.7728. This drop in performance could be due to 
-several reasons, but one hypothesis could be the fact the the authors used an additional conditional random field, 
+several reasons, but one hypothesis could be the fact that the authors used an additional conditional random field, 
 while this model uses a regular classification layer with softmax activation on top of SciBERT model.
 
 At word level, this model achieves a precision of 0.7742, a recall of 0.8536 and a F1-score of 0.8093.
