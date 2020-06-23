@@ -5,7 +5,7 @@ biomedical datasets as well as the models (which I have uploaded into HuggingFac
 
 ## Model Usage
 If you are only interested on using the models, you can do it directly from 🤗/[transformers](https://huggingface.co/transformers/) 
-library. Th models websites are available from the following links:
+library. The models websites are available from the following links:
 - [`scibert_scivocab_cased_ner_jnlpba`](https://huggingface.co/fran-martinez/scibert_scivocab_cased_ner_jnlpba). 
 
 ### Example of usage
