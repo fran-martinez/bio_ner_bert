@@ -138,7 +138,7 @@ a list of a dataclass called `InputBert`.
 
 ### The model
 It is represented through `BertForTokenClassification` and `AutoTokenizer` classes from 
-[`transformer`](https://github.com/huggingface/transformers) library.
+[`transformers`](https://github.com/huggingface/transformers) library.
 
 ### The trainer
 It is represented through [`BertTrainer`](https://github.com/fran-martinez/bio_ner_bert/blob/master/trainer.py) class.

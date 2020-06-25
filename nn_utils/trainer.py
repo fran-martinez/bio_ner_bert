@@ -1,7 +1,6 @@
 import itertools
 import os
-from typing import Dict, Optional
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Dict, Optional
 
 import numpy as np
 import torch
