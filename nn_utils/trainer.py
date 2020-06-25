@@ -61,8 +61,8 @@ class BertTrainer:
                 accumulating the gradient for each step. Later, the network parameters will be updated.
                 So at the end, this is equivalent to train your network with a batch size of 32. The batch
                 size is inferred from `dataloader_train` argument.
-            print_every: How often you want to print loss. Measured in batches where a batch is considered
-                batch_size * accumulate_grad_every.
+            print_every (`int`): How often you want to print loss. Measured in batches where a batch is
+                considered batch_size * accumulate_grad_every.
             print_val_mistakes (`bool`): whether to print validation examples (sentences) where the model
                 commits at least one mistake. It is printed after each epoch. The printed info is the word
                 within each sentence, its predicted label and the real label. This is very useful to
