@@ -114,5 +114,4 @@ if DATA_TEST_PATH is not None:
                                  batch_size=BATCH_SIZE_VAL)
 
     trainer.evaluate(dataloader_test, verbose=True)
-    print('H')
 
