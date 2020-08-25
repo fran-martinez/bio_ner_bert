@@ -12,7 +12,8 @@ from nn_utils.trainer import BertTrainer
 
 # https://github.com/cambridgeltl/MTL-Bioinformatics-2016/tree/master/data
 DATA_TR_PATH = './data/JNLPBA/Genia4ERtask1.iob2'
-DATA_TS_PATH = './data/JNLPBA/Genia4EReval1.iob2'
+DATA_VAL_PATH = './data/JNLPBA/Genia4EReval1.iob2'
+DATA_TEST_PATH = None
 SEED = 42
 
 # MODEL
@@ -25,7 +26,7 @@ N_EPOCHS = 6
 BATCH_SIZE = 8
 BATCH_SIZE_VAL = 28
 WEIGHT_DECAY = 0
-LEARNING_RATE = 5e-5  # 2e-4
+LEARNING_RATE = 1e-4  # 2e-4
 RATIO_WARMUP_STEPS = .1
 DROPOUT = .3
 ACUMULATE_GRAD_EVERY = 4
@@ -39,10 +40,10 @@ torch.cuda.manual_seed_all(SEED)
 
 # get data
 training_set = read_data_from_file(DATA_TR_PATH)
-test_set = read_data_from_file(DATA_TS_PATH)
+val_set = read_data_from_file(DATA_VAL_PATH)
 
 # Automatically extract labels and their indexes from data.
-labels2ind, labels_count = get_labels(training_set + test_set)
+labels2ind, labels_count = get_labels(training_set + val_set)
 
 # Load tokenizer
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -53,24 +54,23 @@ training_set = NerDataset(dataset=training_set,
                           labels2ind=labels2ind,
                           max_len_seq=MAX_LEN_SEQ)
 
-test_set = NerDataset(dataset=test_set,
-                      tokenizer=tokenizer,
-                      labels2ind=labels2ind,
-                      max_len_seq=MAX_LEN_SEQ)
+val_set = NerDataset(dataset=val_set,
+                     tokenizer=tokenizer,
+                     labels2ind=labels2ind,
+                     max_len_seq=MAX_LEN_SEQ)
 
 dataloader_tr = DataLoader(dataset=training_set,
                            batch_size=BATCH_SIZE,
                            shuffle=True)
 
-dataloader_ts = DataLoader(dataset=test_set,
-                           batch_size=BATCH_SIZE_VAL,
-                           shuffle=False)
+dataloader_val = DataLoader(dataset=val_set,
+                            batch_size=BATCH_SIZE_VAL,
+                            shuffle=False)
 
 # Load model
 nerbert = BertForTokenClassification.from_pretrained(MODEL_NAME,
                                                      hidden_dropout_prob=DROPOUT,
                                                      attention_probs_dropout_prob=DROPOUT,
-                                                     label2id=labels2ind,
                                                      num_labels=len(labels2ind),
                                                      id2label={str(v): k for k, v in labels2ind.items()})
 
@@ -90,13 +90,29 @@ trainer = BertTrainer(model=nerbert,
                       tokenizer=tokenizer,
                       optimizer=optimizer,
                       scheduler=scheduler,
-                      dataloader_train=dataloader_tr,
-                      dataloader_test=dataloader_ts,
                       labels2ind=labels2ind,
                       device=DEVICE,
                       n_epochs=N_EPOCHS,
                       accumulate_grad_every=ACUMULATE_GRAD_EVERY,
                       output_dir='./trained_models')
 
-tr_losses, val_losses = trainer.train()
+# Train and validate model
+trainer.train(dataloader_train=dataloader_tr,
+              dataloader_val=dataloader_val)
+
+# Test the model on test set if any
+if DATA_TEST_PATH is not None:
+    print(f"{'*'*40}\n\t\tEVALUATION ON TEST SET\n{'*'*40}")
+    test_set = read_data_from_file(DATA_TEST_PATH)
+
+    test_set = NerDataset(dataset=test_set,
+                          tokenizer=tokenizer,
+                          labels2ind=labels2ind,
+                          max_len_seq=MAX_LEN_SEQ)
+
+    dataloader_test = DataLoader(dataset=test_set,
+                                 batch_size=BATCH_SIZE_VAL)
+
+    trainer.evaluate(dataloader_test, verbose=True)
+    print('H')
 
