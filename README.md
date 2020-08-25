@@ -1,4 +1,5 @@
 # Finetuning SciBERT on NER downstream task
+![nerbert](imgs/demo.gif)
 This repository contains code to finetune BERT-based models on Named Entity Recognition downstream tasks.
 A part from providing the code, the repository also provides results for several 
 biomedical datasets as well as the models (which I have uploaded into HuggingFace models [website](https://huggingface.co/models))
