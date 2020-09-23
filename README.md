@@ -131,7 +131,7 @@ from `transformers` library. During training, `BertForTokenClassification` estim
 so labels are passed as input. During inference there is no need to provide the labels. 
 
 If `bert_hugging=False`, the returned data is is a tuple with two elements. The first one is a list of tensors with the 
-BERT's input (`input_ids`, `attention_mask`, `token_type_ids`) The second is the tensor for the labels. This format is 
+BERT's input (`input_ids`, `attention_mask`, `token_type_ids`). The second is the tensor for the labels. This format is 
 compatible with `pytorch-lr-finder` and used in `find_learning_rate.py`.
 
 Internally, `NerDataset` calls a function `data2tensors` that transforms input examples into tensors. The input examples are
